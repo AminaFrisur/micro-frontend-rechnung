@@ -1,0 +1,47 @@
+
+networks:
+  service:
+    name: micro-frontend-rechnung-service-main
+  architecture:
+    name: main
+
+services:
+  rest-api-frontend-rechnung1:
+    container_name: rest-api-frontend-rechnung1
+    build: ./frontend
+    platform: wasi/wasm32
+    runtime: io.containerd.wasmedge.v1
+    networks:
+      - service
+      - architecture
+
+  rest-api-frontend-rechnung2:
+    container_name: rest-api-frontend-rechnung2
+    build: ./frontend
+    platform: wasi/wasm32
+    runtime: io.containerd.wasmedge.v1
+    networks:
+      - service
+      - architecture
+
+  rest-api-frontend-rechnung3:
+    container_name: rest-api-frontend-rechnung3
+    build: ./frontend
+    platform: wasi/wasm32
+    runtime: io.containerd.wasmedge.v1
+    networks:
+      - service
+      - architecture
+
+  api-gateway-frontend-rechnung:
+    container_name: api-gateway-frontend-rechnung
+    build: ./api_gateway
+    networks:
+      - service
+      - architecture
+    ports:
+      - 8102:80
+    depends_on:
+      - rest-api-frontend-rechnung1
+      - rest-api-frontend-rechnung2
+      - rest-api-frontend-rechnung3

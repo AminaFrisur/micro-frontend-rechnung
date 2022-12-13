@@ -129,9 +129,9 @@ async function handle_req(s, req, parameter) {
 }
 
 async function server_start() {
-    print('listen 8102...');
+    print('listen 8100...');
     try {
-        let s = new net.WasiTcpServer(8102);
+        let s = new net.WasiTcpServer(8101);
         for (var i = 0; ; i++) {
             let cs = await s.accept();
             handle_client(cs);
